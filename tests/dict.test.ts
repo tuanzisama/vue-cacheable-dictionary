@@ -40,8 +40,8 @@ describe('DictArray', () => {
     ])
 
     expect(arr.item('1')?.label).toBe('A')
-    expect(arr.label('2')).toBe('B')
-    expect(arr.label('999')).toBe('')
+    expect(arr.label(2)).toBe('B')
+    expect(arr.label(999)).toBe('')
 
     const fallback = { label: 'DEFAULT', value: 999 }
     expect(arr.item('999' as any, fallback)).toBe(fallback)
@@ -71,7 +71,7 @@ describe('DictionaryStore', () => {
     expect(store.size()).toBe(1)
     expect(store.keys()).toEqual(['type'])
     expect(store.get('type' as any)).toBeInstanceOf(DictArray)
-    expect(store.get('type' as any)?.label('1')).toBe('A')
+    expect(store.get('type' as any)?.label(1)).toBe('A')
     expect(store.store.value instanceof Map).toBe(true)
 
     store.delete('type' as any)
@@ -88,7 +88,7 @@ describe('DictionaryStore', () => {
 
     expect(store.size()).toBe(2)
     expect(store.keys()).toEqual(['type', 'status'])
-    expect(store.get('status' as any)?.label('0')).toBe('Enabled')
+    expect(store.get('status' as any)?.label(0)).toBe('Enabled')
   })
 })
 
@@ -117,7 +117,7 @@ describe('createDictionaryInstance', () => {
     await Promise.resolve()
 
     expect(instance.queue.size).toBe(0)
-    expect(store.get('type' as any)?.label('1')).toBe('A')
+    expect(store.get('type' as any)?.label(1)).toBe('A')
   })
 
   test('getDictData dedupes requests by store and queue', async () => {

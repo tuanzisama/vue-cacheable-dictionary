@@ -5,6 +5,8 @@ export interface DictItem {
   value: any // not sure if other data types exist
 }
 
+type DictItemValue = DictItem['value']
+
 export class DictArray<D extends DictItem = DictItem> extends Array<D> {
   constructor(dicts: D[]) {
     super()
@@ -18,7 +20,7 @@ export class DictArray<D extends DictItem = DictItem> extends Array<D> {
 
   /**
    * Like `omit` in `lodash.js`
-   * @param values
+   * @param values The values of dict items to omit.
    * @returns DictArray
    */
   public omit(values: DictKey[]): DictArray<D> {
@@ -27,7 +29,7 @@ export class DictArray<D extends DictItem = DictItem> extends Array<D> {
 
   /**
    * Like `pick` in `lodash.js`
-   * @param values
+   * @param values The values of dict items.
    * @returns DictArray
    */
   public pick(values: DictKey[]): DictArray<D> {
@@ -39,7 +41,7 @@ export class DictArray<D extends DictItem = DictItem> extends Array<D> {
    * @param value The value of dict item.
    * @returns The label of dict item.
    */
-  public label(value: DictKey) {
+  public label(value: DictItemValue) {
     return this.item(value)?.label ?? ''
   }
 
@@ -49,7 +51,7 @@ export class DictArray<D extends DictItem = DictItem> extends Array<D> {
    * @param defaultDict The default dict item.
    * @returns The dict item.
    */
-  public item(value: DictKey, defaultDict?: D) {
+  public item(value: DictItemValue, defaultDict?: D) {
     return this.find(item => item.value === value) ?? defaultDict
   }
 
